@@ -27,6 +27,14 @@ function displayBooks(){
     .insertBefore(createDOMBook(book), addBook));
 }
 
+function displayLatestBook(){
+    const book = myLibrary[myLibrary.length - 1];
+    const currentLibrary = document.querySelector('.library');
+    const addBook = document.querySelector('.add-book');
+    currentLibrary
+    .insertBefore(createDOMBook(book), addBook)
+}
+
 function createDOMBook(book){
     const newBook = document.createElement('div');
     newBook.className = 'book-card';
@@ -62,16 +70,27 @@ function createDOMBook(book){
 addBookButton.addEventListener('click', () => dialog.showModal());
 submitButton.addEventListener('click', (event) => {
     event.preventDefault();
-    const title = document.querySelector('#bookName').value;
-    const author = document.querySelector('#bookAuthor').value;
-    const pages = document.querySelector('#pages').value;
-    let read = document.querySelector('input[name="readRadios"]:checked').value;
-    read = 'Read' ? true : false;
+    const title = document.querySelector('#bookName');
+    const author = document.querySelector('#bookAuthor');
+    const pages = document.querySelector('#pages');
+    const read = document.querySelector('input[name="readRadios"]:checked');
     dialog.close();
+    if(title.value != '' && author.value != '' && pages.value != '' && read){
+        let readVal = read.value == 'Read' ? true : false;
+        addBookToLibrary(title.value, author.value, pages.value, readVal);
+        displayLatestBook();
+        const book = [title, author, pages];
+        book.forEach((elem) => elem.value = '');
+        if(read) read.checked = false;
+    }else{
+        alert('Incomplete Information! Try again');
+    }
+
+
+
+
 })
 
-addBookToLibrary('The Stand', 'Stephan Hawking', 1200, false);
-addBookToLibrary('The Stand', 'Stephan Hawking', 1200, true);
 addBookToLibrary('The Stand', 'Stephan Hawking', 1200, false);
 
 displayBooks();
