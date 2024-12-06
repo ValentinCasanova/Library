@@ -2,6 +2,7 @@ const myLibrary = [];
 const addBookButton = document.querySelector('.add-book button');
 const dialog = document.querySelector('dialog');
 const submitButton = document.querySelector('#submit');
+dialog.close();
 
 
 function Book(title, author, pages, read) {
@@ -105,6 +106,12 @@ submitButton.addEventListener('click', (event) => {
     }else{
         alert('Incomplete Information! Try again');
     }
+    dialog.close();
 })
 
 displayBooks();
+addBookToLibrary('The Stand', 'Stephan King', 1224, true);
+displayLatestBook()
+addBookToLibrary('A Song of Ice and Fire', 'George RR Martin', 600, false);
+displayLatestBook()
+
